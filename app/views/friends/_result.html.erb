@@ -1,0 +1,19 @@
+
+<div class="results-block mt-3">
+  <%= render 'layouts/messages' %>
+</div>
+<% if @friend && current_user != @friend %> 
+    <div class="card card-header results-block mt-3">
+      <strong>Email: </strong><%= @friend.email %>
+      <strong>First name: </strong><%= @friend.first_name %>
+      <strong>Last name: </strong><%= @friend.last_name %>
+      <% if !current_user.friend_already_added?(@friend.email) %>
+        <%= link_to 'Add friend', friendships_path(user: current_user, friend: @friend.id), class: 'btn btn-xs btn-success', method: :post %>
+      <% else %>
+        <span class="badge bg-secondary">
+          You are already friends with <%= @friend.first_name %> 
+        </span>
+      <% end %>
+    </div>
+  
+<% end %>
