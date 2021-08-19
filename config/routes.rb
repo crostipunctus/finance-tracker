@@ -10,6 +10,6 @@ Rails.application.routes.draw do
   get "search_stock", to: "stocks#search"
 
   get 'friends', to: "users#my_friends"
-  get "search_friends", to: "friends#search"
+  get "search_friends", to: "friends#search_db"
   
 end

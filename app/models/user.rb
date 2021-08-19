@@ -38,5 +38,34 @@ class User < ApplicationRecord
     friend = User.where(email: friend_email)
     return false if friend == User
   end
+
+  def self.search(params)
+    params.strip! 
+    to_send_back = (email_matches(params) + first_name_matches(params) + last_name_matches(params)).uniq
+    return nil unless to_send_back
+    to_send_back
+  end
+
+  def self.email_matches(params)
+    matches('email', params)
+  end
+
+  def self.first_name_matches(params)
+    matches('first_name', params)
+  end
+
+  def self.last_name_matches(params)
+    matches('last_name', params)
+  end
+
+
+
+  def self.matches(field_name, params)
+    where("#{field_name} like ?", "%#{params}%")
+  end
+
+  def except_current_user(users)
+    users.reject {|user| user.id == self.id }
+  end
     
 end

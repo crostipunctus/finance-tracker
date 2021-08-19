@@ -2,18 +2,27 @@
 <div class="results-block mt-3">
   <%= render 'layouts/messages' %>
 </div>
-<% if @friend && current_user != @friend %> 
-    <div class="card card-header results-block mt-3">
-      <strong>Email: </strong><%= @friend.email %>
-      <strong>First name: </strong><%= @friend.first_name %>
-      <strong>Last name: </strong><%= @friend.last_name %>
-      <% if !current_user.friend_already_added?(@friend.email) %>
-        <%= link_to 'Add friend', friendships_path(user: current_user, friend: @friend.id), class: 'btn btn-xs btn-success', method: :post %>
-      <% else %>
-        <span class="badge bg-secondary">
-          You are already friends with <%= @friend.first_name %> 
-        </span>
-      <% end %>
-    </div>
+<% if @friends  %> 
+  
+  <div class="card card-header results-block mt-3">
+    <table class="col-md-12">
+      <tbody>   
+        <% @friends.each do |friend| %>
+          <tr>
+            <td><strong>Email: </strong><%= friend.email %></td>
+            <td><strong>Name: </strong><%= friend.first_name %> <%= friend.last_name%></td>
+            <td><strong>Actions:<%= link_to "View profile", '#', class: 'btn btn-xs btn-success' %>
+            <% if !current_user.friend_already_added?(friend.email) %>
+              <%= link_to 'Add friend', friendships_path(user: current_user, friend: friend.id), class: 'btn btn-xs btn-success', method: :post %></td>
+            <% else %>
+            <span class="badge bg-secondary">
+              You are already friends with <%= friend.first_name %> 
+            </span>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+  </div>
+
   
 <% end %>
