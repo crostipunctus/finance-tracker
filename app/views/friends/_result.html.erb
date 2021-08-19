@@ -1,9 +1,7 @@
-
-<div class="results-block mt-3">
+<div class="results-block">
   <%= render 'layouts/messages' %>
 </div>
-<% if @friends  %> 
-  
+<% if !@friends.blank?  %> 
   <div class="card card-header results-block mt-3">
     <table class="col-md-12">
       <tbody>   
@@ -11,9 +9,9 @@
           <tr>
             <td><strong>Email: </strong><%= friend.email %></td>
             <td><strong>Name: </strong><%= friend.first_name %> <%= friend.last_name%></td>
-            <td><strong>Actions:<%= link_to "View profile", '#', class: 'btn btn-xs btn-success' %>
+            <td><strong>Actions:<%= link_to "View profile", user_path(friend), class: 'btn btn-xs btn-success' %>
             <% if !current_user.friend_already_added?(friend.email) %>
-              <%= link_to 'Add friend', friendships_path(user: current_user, friend: friend.id), class: 'btn btn-xs btn-success', method: :post %></td>
+              <%= link_to 'Add friend?', friendships_path(user: current_user, friend: friend.id), class: 'btn btn-xs btn-success', method: :post %></td>
             <% else %>
             <span class="badge bg-secondary">
               You are already friends with <%= friend.first_name %> 
