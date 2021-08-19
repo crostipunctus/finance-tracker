@@ -10,7 +10,7 @@ class FriendsController < ApplicationController
           end
         else
           respond_to do |format|
-            flash.now[:alert] = "Please enter a valid email id"
+            flash.now[:alert] = "No such user. Please enter a valid email id."
             format.js { render partial: 'friends/result' }
           end
         end
