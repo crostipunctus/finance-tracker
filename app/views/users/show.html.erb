@@ -1,6 +1,29 @@
-<%= @user.first_name %>
+<h2>User details</h2>
 
-
-<% @user_friends.each do |friend| %>
-  <%= friend.first_name %>
+<% if current_user.id != @user.id %>
+<div class="card card-header results-block mt-3">
+  <table class="col-md-12">
+    <tbody>   
+        <tr>
+          <td><strong>Email: </strong><%= @user.email %></td>
+          <td><strong>Name: </strong><%= @user.full_name %></td>
+          <td><% if !current_user.friend_already_added?(@user.email) %>
+            <%= link_to 'Add friend?', friendships_path(user: current_user, friend: @user.id), class: 'btn btn-xs btn-success', method: :post %></td>
+          <% else %>
+          <span class="badge bg-secondary">
+            You are already friends with <%= @user.first_name %> 
+          </span>
+          <% end %>
+        </tr>
+    </tbody>
+  </table>
+</div>
 <% end %>
+
+<% if !@tracked_stocks.empty? %>
+ <%= render 'stocks/list' %>
+<% else %>
+  <p class='lead'>This user is not tracking any stocks</p>
+<% end %>
+
+  
