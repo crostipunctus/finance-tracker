@@ -19,5 +19,9 @@
   <%= render 'users/result' %>
 </div>
 <% if !@tracked_stocks.empty? %>
- <%= render 'stocks/list' %>
+  <%= render 'stocks/list' %>
 <% end %>
+
+
+
+<%= link_to "Refresh stock prices", refresh_stock_path, remote: true, method: :get, class: 'btn btn-success' %>

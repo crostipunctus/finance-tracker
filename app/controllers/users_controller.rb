@@ -12,8 +12,20 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user_friends = @user.friends
     @tracked_stocks = @user.stocks
- 
+  end
 
+  def refresh
+    @tracked_stocks = current_user.stocks
+    @tracked_stocks.each do |stock|
+      stock = Stock.new_lookup(stock.ticker)
+      s = Stock.find_by(ticker: stock.ticker)
+      s.update(last_price: stock.last_price)
+    end
+    @refreshed_stocks = current_user.stocks
+    @user = current_user
+    respond_to do |format|
+      format.js { render partial: 'stocks/list' }
+    end
   end
   
  
